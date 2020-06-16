@@ -50,6 +50,10 @@
   box-shadow: 0 0.25rem 0.25rem 0 rgba(17, 119, 119, 1);
 }
 
+.is--hidden {
+  display: none;
+}
+
 /** Add todo styling */
 
 .todo-add-todo__container {

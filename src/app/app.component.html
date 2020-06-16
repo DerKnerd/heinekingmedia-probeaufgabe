@@ -1,23 +1,25 @@
 <main class="todo">
   <div class="todo__container">
-    <h1 class="todo__header">My Todos</h1>
+    <h1 class="todo__header" i18n="@@header">My Todos</h1>
     <form class="todo-add-todo__container">
       <input name="newTodoTitle" class="todo__input todo-add-todo__input" type="text" [(ngModel)]="newTodoTitle"
-             placeholder="What do you have to do?" aria-label="What do you have to do?">
-      <button class="todo__button todo__button--add-todo" type="submit" aria-label="Create todo" (click)="createTodo()">Add</button>
+             placeholder="What do you have to do?" i18n-aria-label="@@newTodoInput"
+             aria-label="What do you have to do?">
+      <button class="todo__button todo__button--add-todo" type="submit" i18n (click)="createTodo()">Add</button>
     </form>
     <form class="todo-sort__container">
-      <label class="todo-sort__label todo-sort__label--sort-by" for="sortBy">Sort by</label>
+      <label class="todo-sort__label todo-sort__label--sort-by" i18n="@@sortByLabel" for="sortBy">Sort by</label>
       <select
         class="todo-sort__select todo-sort__select--sort-by"
         name="sortBy"
         id="sortBy"
         [(ngModel)]="sortBy"
         (ngModelChange)="sortTodos()">
-        <option [value]="SORT_BY_CREATE_DATE">Create Date</option>
-        <option [value]="SORT_BY_RESOLVED_NOT_RESOLVED">Resolved/Not resolved</option>
+        <option [value]="SORT_BY_CREATE_DATE" i18n="@@sortByCreateDate">Create Date</option>
+        <option [value]="SORT_BY_RESOLVED_NOT_RESOLVED" i18n="@@sortByResolvedNotResolved">Resolved/Not resolved
+        </option>
       </select>
-      <label class="todo-sort__label todo-sort__label--sort-direction" for="sortDirection">in</label>
+      <label class="todo-sort__label todo-sort__label--sort-direction" i18n="@@sortDirectionLabel" for="sortDirection">in</label>
       <select
         class="todo-sort__select todo-sort__select--sort-direction"
         name="sortDirection"
@@ -25,28 +27,35 @@
         id="sortDirection"
         [(ngModel)]="sortDirection"
         (ngModelChange)="sortTodos()">
-        <option [value]="SORT_DIRECTION_ASCENDING">ascending</option>
-        <option [value]="SORT_DIRECTION_DESCENDING">descending</option>
+        <option [value]="SORT_DIRECTION_ASCENDING" i18n="@@sortDirectionAscending">ascending</option>
+        <option [value]="SORT_DIRECTION_DESCENDING" i18n="@@sortDirectionDescending">descending</option>
       </select>
-      <span class="todo-sort__label todo-sort__label--plain-text">order</span>
+      <span class="todo-sort__label todo-sort__label--plain-text" i18n="@@sortingOrderLabel">order</span>
     </form>
     <div class="todo-todos__container">
       <form *ngFor="let todo of todos" class="todo-todos__item">
+        <span [attr.id]="'todoResolvedLabel' + todo.createDate" i18n="@@todoTitleTodo" class="is--hidden" *ngIf="todo.resolved">
+          Mark this todo as todo
+        </span>
+        <span [attr.id]="'todoResolvedLabel' + todo.createDate" i18n="@@todoTitleDone" class="is--hidden" *ngIf="!todo.resolved">
+          Mark this todo as done
+        </span>
         <input
           class="todo-todos__checkbox"
           name="todoResolved"
           (change)="saveChanges()"
           [(ngModel)]="todo.resolved"
           type="checkbox"
-          [attr.id]="'checkbox' + todo.createDate"
-          [attr.aria-label]="'Mark this todo as ' +  todo.resolved ? 'done' : 'todo'">
+          aria-labelledby="todoResolvedLabel"
+          [attr.id]="'checkbox' + todo.createDate">
         <label [htmlFor]="'checkbox' + todo.createDate"></label>
+        <span [attr.id]="'todoTitleLabel' + todo.createDate" i18n="@@todoTitle" class="is--hidden">Todo title</span>
         <input
           class="todo__input todo-todos__input"
           [class.todo-todos__input--resolved]="todo.resolved"
           name="todoTitle"
-          aria-label="Todo title"
           type="text"
+          [attr.aria-labelledby]="'todoTitleLabel' + todo.createDate"
           (change)="saveChanges()"
           [(ngModel)]="todo.title">
       </form>
