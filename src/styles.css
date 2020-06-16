@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body,
+html {
+  margin: 0;
+  --primary-color: #117777;
+  --primary-color-alpha: rgba(17, 119, 119, 0.2);
+  --primary-color-alpha-darker: rgba(17, 119, 119, 0.4);
+  --white: #ffffff;
+  font-size: 16px;
+}
